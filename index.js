@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
-const userModel = require('./models/user-model.js');
 const apiRoutes = require('./api-routes');
 const app = express();
 

@@ -1,10 +1,5 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const userModel = require('./models/user-model');
-const app = express();
 
 //------------GET ALL
 exports.getAll = (req,res) => {
