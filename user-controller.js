@@ -75,23 +75,11 @@ exports.newUser = async (req,res) => {
 }
 
 //-----------------LOGIN
-// app.post('/login/:username/:pass', async (req,res) => {
-//     const username = req.params.username;
-//     const pass = req.params.pass;
-//     const user = userModel.findOne()
-//     userModel.findOne({
-//         userName: userName
-//     })
-//     .then(result => {
-//         bcrypt.compare(pass, hashedPass, function (err, compareRes) {
-//             if(err) {
-//                 return err;
-//             } else if(!compareRes) {
-//                 return 'Wrong password'
-//             } else {
-//                 res.send(result);
-//             }
-//         })
-//     })
-// })
+exports.login = (req,res) => {
+    const userName = req.params.username;
+    const pass = req.params.pass;
+
+}
+
+
 
