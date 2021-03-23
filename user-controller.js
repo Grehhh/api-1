@@ -62,20 +62,30 @@ exports.newUser = async (req,res) => {
     const userName = req.body.username;
     const pass = req.body.pass;
     const hashPass = await bcrypt.hash(pass,2)
-    userModel.create({
-        username: userName,
-        pass: hashPass
-    })
-    .then(result => {
-        return res.send(result);
-    })
-    .catch(err => {
+    const user = userModel.findOne({
+        username: userName
+    }).then(result => {
+        if(result) {
+            res.send('User already exists');
+        } else {
+            userModel.create({
+                username: userName,
+                pass: hashPass
+            })
+            .then(result => {
+                return res.send(result);
+            })
+            .catch(err => {
+                return res.status(201).send(err);
+            })
+        }
+    }).catch(err => {
         return res.status(201).send(err);
     })
 }
 
 //-----------------LOGIN
-exports.login = async (req,res) => {
+exports.login = (req,res) => {
     const userName = req.body.username;
     const pass = req.body.pass;
     const user = userModel.findOne({
@@ -87,16 +97,16 @@ exports.login = async (req,res) => {
         if (result) {
             if (cmp) {
               //   ..... further code to maintain authentication like jwt or sessions
-              return res.send("Auth Successful");
+              return res.send('Auth Successful');
             } else {
-              return res.send("Wrong username or password.");
+              return res.send('Wrong username or password.');
             }
         } else {
-            return res.send("Wrong username or password.");
+            return res.send('Wrong username or password.');
         }
     })
     .catch(err => {
-        return res.status(500).send('Internal server error', err);
+        return res.status(500).send(err);
     })
 }
 
