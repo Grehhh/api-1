@@ -67,18 +67,58 @@ exports.newUser = async (req,res) => {
         pass: hashPass
     })
     .then(result => {
-        res.send(result);
+        return res.send(result);
     })
     .catch(err => {
-        res.status(201).send(err)
+        return res.status(201).send(err);
     })
 }
 
 //-----------------LOGIN
-exports.login = (req,res) => {
-    const userName = req.params.username;
-    const pass = req.params.pass;
+exports.login = async (req,res) => {
+    const userName = req.body.username;
+    const pass = req.body.pass;
+    const user = userModel.findOne({
+        username: userName
+    })
+    .then(result => {
+        const hashedPass = user.pass;
+        const cmp = bcrypt.compare(pass, hashedPass);
+        if (result) {
+            if (cmp) {
+              //   ..... further code to maintain authentication like jwt or sessions
+              return res.send("Auth Successful");
+            } else {
+              return res.send("Wrong username or password.");
+            }
+        } else {
+            return res.send("Wrong username or password.");
+        }
+    })
+    .catch(err => {
+        return res.status(500).send('Internal server error');
+    })
 
+    /*
+    try {
+        const user = await userModel.findOne({ username: req.body.username });
+        console.log(user);
+        if (user) {
+          const cmp = await bcrypt.compare(req.body.pass, user.pass);
+          if (cmp) {
+            //   ..... further code to maintain authentication like jwt or sessions
+            res.send("Auth Successful");
+          } else {
+            res.send("Wrong username or password.");
+          }
+        } else {
+          res.send("Wrong username or password.");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server error Occured");
+    }
+    */
 }
 
 
