@@ -96,29 +96,8 @@ exports.login = async (req,res) => {
         }
     })
     .catch(err => {
-        return res.status(500).send('Internal server error');
+        return res.status(500).send('Internal server error', err);
     })
-
-    /*
-    try {
-        const user = await userModel.findOne({ username: req.body.username });
-        console.log(user);
-        if (user) {
-          const cmp = await bcrypt.compare(req.body.pass, user.pass);
-          if (cmp) {
-            //   ..... further code to maintain authentication like jwt or sessions
-            res.send("Auth Successful");
-          } else {
-            res.send("Wrong username or password.");
-          }
-        } else {
-          res.send("Wrong username or password.");
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Internal Server error Occured");
-    }
-    */
 }
 
 
