@@ -9,17 +9,16 @@ const userSchema = new Schema({
     pass:{
         type: String,
         required: true
-    }
-    // ,
+    },
     // email: {
     //     type: String,
     //     required: true
     // },
     // adress: [],
-    // createdDate: {
-    //     type: Date,
-    //     default: Date.now
-    // }
+    createdDate: {
+        type: Date,
+        default: Date.now()
+    }
 });
 
 module.exports = mongoose.model('users',userSchema);
