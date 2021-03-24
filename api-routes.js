@@ -8,6 +8,7 @@ router.get('/', (req,res) => {
 router.route('/users').get(userController.getAll);
 router.route('/user/:userId').get(userController.getById);
 router.route('/update-user/:userId').put(userController.updateById);
+router.route('/delete/:userId').delete(userController.deleteByID);
 router.route('/new-user').post(userController.newUser);
 router.route('/login').get(userController.login);
 

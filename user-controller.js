@@ -40,15 +40,17 @@ exports.getById = (req,res) => {
 exports.updateById = (req,res) => {
     const userId = req.params.userId;
     const userName = req.body.username;
-    const updateUser = () => userModel.findByIdAndUpdate(userId,{
-        $set: {username: userName}
-    },{ new: true })//debe especificarse new:true para que la respuesta sea la del valor actualizado
-    .then(result => {
-        return res.send(result);
-    })
-    .catch(err => {
-        return console.log(err);
-    })
+    const updateUser = () => {
+        userModel.findByIdAndUpdate(userId,{
+            $set: {username: userName}
+        },{ new: true })//debe especificarse new:true para que la respuesta sea la del valor actualizado
+        .then(result => {
+            return res.send(result);
+        })
+        .catch(err => {
+            return console.log(err);
+        })
+    }
     userModel.findById(userId)
     .then(result => {
         const username = result.username;
@@ -62,6 +64,22 @@ exports.updateById = (req,res) => {
     })
     .catch(err => {
         return console.log(err)
+    })
+}
+
+//------------------DELETE
+exports.deleteByID = (req,res) => {
+    const userId = req.params.userId;
+    userModel.findByIdAndDelete(userId)
+    .then(result => {
+        if(result === null) {
+            res.send('User not found');
+        } else {
+            res.send(`User: ${result.username} deleted successfully`);
+        }
+    })
+    .catch(err => {
+        res.status(500).send(err);
     })
 }
 
