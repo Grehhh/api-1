@@ -2,20 +2,19 @@ const bcrypt = require('bcrypt');
 const userModel = require('./models/user-model');
 
 //------------GET ALL
-exports.getAll = (req,res) => {
-    userModel.find()
-    .then(result => {
+exports.getAll = async (req,res) => {
+    try {
+        const result = await userModel.find();
         if(result === null) {
-            return res.status(404).send({
-                message: error
+            res.status(404).send({
+                message:error
             })
         } else {
-            return res.send(result);
+            res.send(result);
         }
-    })
-    .catch(err => {
-        return console.log(err);
-    })
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 //-----------------GET ONE BY ID
