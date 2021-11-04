@@ -22,7 +22,10 @@ mongoose.connect(uri, (err) => {
     } else {
         console.log('Conectado a ' + uri)
     }       //este condicional comprueba la conexion
-}, {useNewUrlParser: true});            
+}, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+});            
 
 
 app.listen(port, () => {

@@ -124,7 +124,7 @@ exports.login = (req,res) => {
         const hashedPass = user.pass;
         const cmp = bcrypt.compare(pass, hashedPass);
         if (result) {
-            if (cmp) {
+            if (cmp && pass != '') {
               //   ..... further code to maintain authentication like jwt or sessions
               return res.send('Auth Successful');
             } else {
